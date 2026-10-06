@@ -1,0 +1,8 @@
+{
+  "name": "Remix Remix Remix تأمن | Ta\u0027man - Campus Lost \u0026 Found",
+  "description": "منصة تأمن للمفقودات والموجودات الجامعية في جامعة الملك سعود - أمان وسرعة في استعادة مقتنياتك",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

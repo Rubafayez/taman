@@ -1,0 +1,391 @@
+@import "tailwindcss";
+
+:root {
+  --bg-950: #0A0B0D;
+  --bg-900: #101216;
+  --bg-800: #16191F;
+  --line: rgba(255, 255, 255, 0.08);
+  --text-100: #F2F5F9;
+  --text-300: #B4BECB;
+  --blue-400: #4D9BFF;
+  --blue-600: #2F6BFF;
+  --amber-400: #FFB84D;
+  --emerald-400: #3DDC97;
+  --danger: #FF6B7A;
+
+  font-family: 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  direction: rtl;
+}
+
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+  background-color: var(--bg-950);
+  color: var(--text-100);
+}
+
+body {
+  font-family: 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Page background: near-black + a fixed subtle dot grid
+   radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px) / 22px 22px, pointer-events:none,
+   behind everything, never causing scroll. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 22px 22px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+/* Typography Specifics */
+.app-container {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: clamp(16px, 4vw, 32px);
+}
+
+@media (min-width: 1536px) {
+  .app-container {
+    max-width: 1440px;
+  }
+}
+
+h1, .hero-headline {
+  font-size: clamp(24px, 3.4vw, 40px);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+  color: var(--text-100);
+}
+
+.hero-subline {
+  font-size: clamp(14px, 1.3vw, 18px);
+  color: var(--text-300);
+}
+
+.card-title {
+  font-size: clamp(16px, 1.2vw, 19px);
+  font-weight: 600;
+  color: var(--text-100);
+}
+
+.body-text {
+  font-size: clamp(15px, 1.05vw, 17px);
+  line-height: 1.6;
+  color: var(--text-300);
+}
+
+.meta-text {
+  font-size: 14px;
+  color: var(--text-300);
+}
+
+/* Ensure minimum readable font size and input dimensions */
+input, select, textarea {
+  font-size: 16px !important;
+}
+
+/* Accessible focus ring */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--blue-400) !important;
+  outline-offset: 2px !important;
+}
+
+/* Custom scrollbars for dark surfaces */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-950);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* Fast, super-smooth confetti animations (1.2–1.6s duration, pure GPU transform/opacity) */
+@keyframes confetti-fall {
+  0% {
+    transform: translate3d(0, -10vh, 0) rotate(0deg) scaleX(1);
+    opacity: 1;
+  }
+  30% {
+    transform: translate3d(calc(var(--drift) * 0.35 + var(--sway)), 28vh, 0) rotate(calc(var(--spin) * 0.3)) scaleX(-0.85);
+    opacity: 1;
+  }
+  65% {
+    transform: translate3d(calc(var(--drift) * 0.7 - var(--sway)), 65vh, 0) rotate(calc(var(--spin) * 0.65)) scaleX(0.9);
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(var(--drift), 110vh, 0) rotate(var(--spin)) scaleX(0.6);
+    opacity: 0;
+  }
+}
+
+@keyframes confetti-cannon {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scaleX(1);
+    opacity: 1;
+  }
+  20% {
+    transform: translate3d(calc(var(--cannon-x) * 0.7), 18vh, 0) rotate(calc(var(--spin) * 0.25)) scaleX(-0.85);
+    opacity: 1;
+  }
+  50% {
+    transform: translate3d(var(--cannon-x), 52vh, 0) rotate(calc(var(--spin) * 0.55)) scaleX(0.9);
+    opacity: 1;
+  }
+  75% {
+    transform: translate3d(calc(var(--cannon-x) + var(--drift)), 82vh, 0) rotate(calc(var(--spin) * 0.8)) scaleX(-0.75);
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(calc(var(--cannon-x) + var(--drift)), 110vh, 0) rotate(var(--spin)) scaleX(0.6);
+    opacity: 0;
+  }
+}
+
+.confetti-piece-fall {
+  animation: confetti-fall var(--dur, 1.4s) cubic-bezier(0.25, 0.46, 0.45, 0.94) var(--delay, 0s) forwards;
+  will-change: transform, opacity;
+}
+
+.confetti-piece-cannon {
+  animation: confetti-cannon var(--dur, 1.4s) cubic-bezier(0.22, 0.61, 0.36, 1) var(--delay, 0s) forwards;
+  will-change: transform, opacity;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   HERO ANIMATIONS: "الأغراض تلقى طريقها" (Campus Constellation)
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* 1. Constellation dot twinkle */
+@keyframes hero-twinkle {
+  0% {
+    opacity: 0.08;
+  }
+  100% {
+    opacity: 0.22;
+  }
+}
+
+.hero-dot-twinkle {
+  animation: hero-twinkle var(--twinkle-dur, 4s) ease-in-out infinite alternate;
+}
+
+/* 2. Constellation connecting line: draws over 700ms, holds 600ms, fades over 500ms (total 1.8s) */
+@keyframes hero-line-draw {
+  0% {
+    stroke-dashoffset: var(--line-len);
+    opacity: 0.55;
+  }
+  38.89% {
+    stroke-dashoffset: 0;
+    opacity: 0.55;
+  }
+  72.22% {
+    stroke-dashoffset: 0;
+    opacity: 0.55;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+.hero-conn-line {
+  stroke: #4D9BFF;
+  stroke-width: 1px;
+  animation: hero-line-draw 1.8s ease-in-out forwards;
+  will-change: stroke-dashoffset, opacity;
+}
+
+/* 3. Endpoint pulse ring when line completes at 700ms */
+@keyframes hero-ring-pulse {
+  0% {
+    r: 2px;
+    opacity: 0;
+    stroke: #4D9BFF;
+    stroke-width: 1.5px;
+  }
+  1% {
+    r: 2px;
+    opacity: 0.85;
+    stroke: #4D9BFF;
+    stroke-width: 1.5px;
+  }
+  100% {
+    r: 9px;
+    opacity: 0;
+    stroke: #4D9BFF;
+    stroke-width: 1px;
+  }
+}
+
+.hero-match-pulse {
+  fill: none;
+  animation: hero-ring-pulse 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards;
+  opacity: 0;
+  will-change: r, opacity;
+}
+
+/* 4. Radar concentric rings from shield center: scale 1 -> 1.9, fade 0.18 -> 0 over 5s loop */
+@keyframes hero-radar-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.18;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
+.hero-radar-ring {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  border-radius: 9999px;
+  border: 1px solid #4D9BFF;
+  animation: hero-radar-pulse 5s cubic-bezier(0.2, 0.6, 0.4, 1) infinite;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.hero-radar-1 {
+  animation-delay: 0s;
+}
+
+.hero-radar-2 {
+  animation-delay: 1.2s;
+}
+
+.hero-radar-3 {
+  animation-delay: 2.4s;
+}
+
+/* 5. Shield watermark gentle floating */
+@keyframes hero-shield-float {
+  0% {
+    transform: translateY(-6px);
+  }
+  100% {
+    transform: translateY(6px);
+  }
+}
+
+.hero-shield-float {
+  animation: hero-shield-float 6s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* 6. Light sweep: diagonal band passes every 9s, 2.5s per pass (27.78% of 9s) */
+@keyframes hero-light-sweep {
+  0% {
+    transform: translateX(-150%) skewX(-15deg);
+    opacity: 0;
+  }
+  2% {
+    opacity: 1;
+  }
+  24% {
+    opacity: 1;
+  }
+  27.78% {
+    transform: translateX(350%) skewX(-15deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(350%) skewX(-15deg);
+    opacity: 0;
+  }
+}
+
+.hero-light-sweep-bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 50%;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent, rgba(77, 155, 255, 0.10), transparent);
+  animation: hero-light-sweep 9s linear infinite;
+  z-index: 1;
+  will-change: transform, opacity;
+}
+
+/* 7. Headline blue gradient text with slow shimmer */
+@keyframes hero-text-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.hero-gradient-text {
+  background: linear-gradient(
+    110deg,
+    #4D9BFF 0%,
+    #82B9FF 25%,
+    #A9CCFF 50%,
+    #82B9FF 75%,
+    #4D9BFF 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: hero-text-shimmer 7s ease-in-out infinite;
+  display: inline-block;
+}
+
+/* Accessibility: respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .hero-dot-twinkle,
+  .hero-conn-line,
+  .hero-match-pulse,
+  .hero-radar-ring,
+  .hero-shield-float,
+  .hero-light-sweep-bar,
+  .hero-gradient-text {
+    animation: none !important;
+  }
+  .hero-gradient-text {
+    background-position: 50% 50%;
+  }
+}
