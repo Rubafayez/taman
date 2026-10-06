@@ -1,9 +1,26 @@
-# تأمن | Ta'man
+<p align="center">
+  <img src="taman-logo.png" width="340" alt="Ta'man logo">
+</p>
 
-منصة المفقودات والموجودات في الحرم الجامعي — جامعة الملك سعود.
-تُصوِّر الغرض فيُكتب البلاغ عنك، وتُطابَق البلاغات **بالمعنى** لا بالكلمات، ويُسلَّم الغرض بتحقق من الطرفين.
+<h1 align="center">Ta'man — تأمن</h1>
 
-**جرّبها:** https://tamanrksu.netlify.app
+<p align="center">
+  <b>منصة المفقودات والموجودات في الحرم الجامعي — جامعة الملك سعود.<br>
+  تُصوِّر الغرض فيُكتب البلاغ عنك، وتُطابَق البلاغات بالمعنى لا بالكلمات، ويُسلَّم الغرض بتحقق من الطرفين.</b>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=white">
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white">
+  <img src="https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white">
+  <img src="https://img.shields.io/badge/Supabase-3FCF8E?style=flat-square&logo=supabase&logoColor=white">
+  <img src="https://img.shields.io/badge/Gemini-8E75B2?style=flat-square&logo=googlegemini&logoColor=white">
+  <img src="https://img.shields.io/badge/Netlify-00C7B7?style=flat-square&logo=netlify&logoColor=white">
+</p>
+
+<p align="center">
+  <a href="https://tamanrksu.netlify.app"><b>جرّب المنصة →</b></a>
+</p>
 
 ---
 
